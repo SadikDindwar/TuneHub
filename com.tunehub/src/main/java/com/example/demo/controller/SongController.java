@@ -1,0 +1,40 @@
+package com.example.demo.controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+
+import com.example.demo.entities.Song;
+import com.example.demo.services.SongService;
+
+@Controller
+public class SongController {
+	
+	@Autowired
+	SongService service;
+	
+	@PostMapping("/addSong")
+	public String addSong(@ModelAttribute Song song) {
+		boolean songStatus = service.nameExists(song.getName());
+		if(songStatus == false) {
+		service.addSong(song);
+		}
+		else {
+			System.out.println("Song name already exists.");
+		}
+		return "adminHome";
+	}
+	
+	@GetMapping("/viewSongs")
+	public String viewSongs() {
+		List<Song> songsList = service.fetchAllSongs();
+		System.out.println(songsList);
+		return "adminHome";
+	}
+	
+
+}
