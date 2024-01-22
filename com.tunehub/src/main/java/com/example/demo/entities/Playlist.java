@@ -9,7 +9,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 
 @Entity
-public class PlayList {
+public class Playlist {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	int id;
@@ -18,11 +18,11 @@ public class PlayList {
 	@ManyToMany
 	List<Song> songs;
 
-	public PlayList() {
+	public Playlist() {
 		super();
 	}
 
-	public PlayList(int id, String name, List<Song> songs) {
+	public Playlist(int id, String name, List<Song> songs) {
 		super();
 		this.id = id;
 		this.name = name;

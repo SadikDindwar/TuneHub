@@ -14,46 +14,42 @@ import com.example.demo.services.SongService;
 
 @Controller
 public class SongController {
-	
+
 	@Autowired
 	SongService service;
-	
+
 	@PostMapping("/addSong")
 	public String addSong(@ModelAttribute Song song) {
 		boolean songStatus = service.nameExists(song.getName());
-		if(songStatus == false) {
-		service.addSong(song);
-		}
-		else {
+		if (songStatus == false) {
+			service.addSong(song);
+		} else {
 			System.out.println("Song name already exists.");
 		}
 		return "adminHome";
 	}
-	
+
 	@GetMapping("/viewSongs")
 	public String viewSongs(Model model) {
 		List<Song> songsList = service.fetchAllSongs();
 		model.addAttribute("songs", songsList);
-		
+
 		return "displaySongs";
 	}
-	
-	
+
 	@GetMapping("/playSongs")
 	public String playSongs(Model model) {
 		boolean premiumUser = true;
-		if(premiumUser) {
+		if (premiumUser) {
 			List<Song> songsList = service.fetchAllSongs();
 			model.addAttribute("songs", songsList);
-			
+
 			return "displaySongs";
-			
-		}
-		else {
+
+		} else {
 			return "makePayment";
 		}
-		
+
 	}
-	
 
 }

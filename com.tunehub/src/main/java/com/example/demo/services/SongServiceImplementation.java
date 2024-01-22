@@ -37,4 +37,10 @@ public class SongServiceImplementation implements SongService {
 		return true;
 	}
 
+	@Override
+	public void updateSong(Song song) {
+		repo.save(song);
+		
+	}
+
 }
