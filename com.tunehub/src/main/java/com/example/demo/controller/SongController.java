@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,10 +31,28 @@ public class SongController {
 	}
 	
 	@GetMapping("/viewSongs")
-	public String viewSongs() {
+	public String viewSongs(Model model) {
 		List<Song> songsList = service.fetchAllSongs();
-		System.out.println(songsList);
-		return "adminHome";
+		model.addAttribute("songs", songsList);
+		
+		return "displaySongs";
+	}
+	
+	
+	@GetMapping("/playSongs")
+	public String playSongs(Model model) {
+		boolean premiumUser = true;
+		if(premiumUser) {
+			List<Song> songsList = service.fetchAllSongs();
+			model.addAttribute("songs", songsList);
+			
+			return "displaySongs";
+			
+		}
+		else {
+			return "makePayment";
+		}
+		
 	}
 	
 

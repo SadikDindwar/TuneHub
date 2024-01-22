@@ -29,20 +29,18 @@ public class UsersServiceImplementation implements UsersService {
 	@Override
 	public boolean validateUser(String email, String password) {
 		Users user = repo.findByEmail(email);
-		String db_pass =user.getPassword();
-		if(password.equals(db_pass)) {
+		String db_pass = user.getPassword();
+		if (password.equals(db_pass)) {
 			return true;
-		}
-		else {
-		return false;
+		} else {
+			return false;
 		}
 	}
 
 	@Override
 	public String getRole(String email) {
 		Users user = repo.findByEmail(email);
-		System.out.println(user.getRole());
-		
+
 		return user.getRole();
 	}
 
