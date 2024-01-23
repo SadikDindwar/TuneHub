@@ -19,7 +19,7 @@ public class PlaylistController {
 
 	@Autowired
 	SongService songService;
-	
+
 	@Autowired
 	PlaylistService playlistService;
 
@@ -29,22 +29,21 @@ public class PlaylistController {
 		model.addAttribute("songs", songList);
 		return "createPlaylist";
 	}
-	
+
 	@PostMapping("/addPlaylist")
 	public String addPlaylist(@ModelAttribute Playlist playlist) {
-		//updating playlist table 
+		// updating playlist table
 		playlistService.addPlaylist(playlist);
-		
-		//updating song table 
-		List <Song> songList = playlist.getSongs();
-		for(Song s: songList) {
-			//getting song from playlist and adding the playlist into that song .
-			s.getPlayLists().add(playlist);
-			
-			//updating song object in db
+
+		// updating song table
+		List<Song> songList = playlist.getSongs();
+		for (Song s : songList) {
+			// getting song from playlist and adding the playlist into that song .
+			s.getPlaylists().add(playlist);
+
+			// updating song object in db
 			songService.updateSong(s);
-			
-			
+
 		}
 		return "adminHome";
 	}

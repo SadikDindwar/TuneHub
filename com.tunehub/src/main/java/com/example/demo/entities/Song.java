@@ -19,20 +19,20 @@ public class Song {
 	String link;
 	
 	@ManyToMany
-	List<Playlist> playLists;
+	List<Playlist> playlists;
 	
 	public Song() {
 		super();
 	}
 
-	public Song(int id, String name, String artist, String genre, String link, List<Playlist> playLists) {
+	public Song(int id, String name, String artist, String genre, String link, List<Playlist> playlists) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.artist = artist;
 		this.genre = genre;
 		this.link = link;
-		this.playLists = playLists;
+		this.playlists = playlists;
 	}
 
 	public int getId() {
@@ -75,12 +75,12 @@ public class Song {
 		this.link = link;
 	}
 
-	public List<Playlist> getPlayLists() {
-		return playLists;
+	public List<Playlist> getPlaylists() {
+		return playlists;
 	}
 
-	public void setPlayLists(List<Playlist> playLists) {
-		this.playLists = playLists;
+	public void setPlaylists(List<Playlist> playlists) {
+		this.playlists = playlists;
 	}
 
 	@Override

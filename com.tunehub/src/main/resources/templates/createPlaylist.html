@@ -7,13 +7,15 @@
 </head>
 
 <body>
-	<form action="addPlaylist">
+	<form action="addPlaylist" method="post">
 		<label>Playlist Name: </label>
 		<input type="text" name="name">
 		</br>
-		<div>
-			<input type="checkbox">
+		<div th:each="song:${songs}">
+			<input type="checkbox" th:name="songs" th:value="${song.id}">
+			<label th:text="${song.name}"></label>
 		</div>
+
 		<input type="submit" value="ADD PLAYLIST">
 	</form>
 

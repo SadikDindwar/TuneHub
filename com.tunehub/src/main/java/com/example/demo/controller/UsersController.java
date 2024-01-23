@@ -35,6 +35,7 @@ public class UsersController {
 	@PostMapping("/validate")
 	public String validate(@RequestParam("email") String email, @RequestParam("password") String password,
 			HttpSession session) {
+
 		if (service.validateUser(email, password) == true) {
 			String role = service.getRole(email);
 
@@ -48,6 +49,7 @@ public class UsersController {
 		} else {
 			return "login";
 		}
+
 	}
 
 	@GetMapping("/pay")
@@ -60,13 +62,13 @@ public class UsersController {
 		}
 		return "login";
 	}
-	
+
 	@GetMapping("/logout")
 	public String logout(HttpSession session) {
-		
-		//invalidating(deleting) the session when user logout
-		session.invalidate(); 
-		
+
+		// invalidating(deleting) the session when user logout
+		session.invalidate();
+
 		return "login";
 	}
 

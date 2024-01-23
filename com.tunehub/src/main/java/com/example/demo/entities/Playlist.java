@@ -14,7 +14,6 @@ public class Playlist {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	int id;
 	String name;
-
 	@ManyToMany
 	List<Song> songs;
 
@@ -55,7 +54,7 @@ public class Playlist {
 
 	@Override
 	public String toString() {
-		return "PlayList [id=" + id + ", name=" + name + ", songs=" + songs + "]";
+		return "Playlist [id=" + id + ", name=" + name + ", songs=" + songs + "]";
 	}
 
 }
