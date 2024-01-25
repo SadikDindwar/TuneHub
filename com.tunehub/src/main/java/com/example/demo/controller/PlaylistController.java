@@ -48,4 +48,15 @@ public class PlaylistController {
 		return "adminHome";
 	}
 
+	@GetMapping("/viewPlaylists")
+	public String viewPlaylists(Model model) {
+
+		List<Playlist> allPlaylists = playlistService.fetchAllPlaylists();
+
+		model.addAttribute("allPlaylists", allPlaylists);
+
+		return "displayPlaylists";
+
+	}
+
 }
