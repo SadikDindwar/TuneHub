@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.entities.Song;
 import com.example.demo.services.SongService;
@@ -50,6 +51,14 @@ public class SongController {
 			return "makePayment";
 		}
 
+	}
+	
+	@PostMapping("/searchSong")
+	public String searchSong(@RequestParam("name") String name , Model model) {
+		Song song= service.findByName(name);
+		// System.out.println(song);
+		model.addAttribute("song",song);
+		return "searchSong";
 	}
 
 }
