@@ -1,5 +1,7 @@
 package com.example.demo.services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -52,7 +54,18 @@ public class UsersServiceImplementation implements UsersService {
 	@Override
 	public void updateUser(Users user) {
 		repo.save(user);
-		
+
+	}
+
+	@Override
+	public List<Users> fetchAllUsers() {
+
+		return repo.findAll();
+	}
+
+	@Override
+	public Users findByName(String username) {
+		return repo.findByUsername(username);
 	}
 
 }
