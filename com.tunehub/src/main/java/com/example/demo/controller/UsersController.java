@@ -54,11 +54,13 @@ public class UsersController {
 				return "adminHome";
 			} else {
 				Users user = service.getUser(email);
+
 				boolean userStatus = user.isPremium();
-				System.out.println(userStatus);
+				String userName = user.getUsername();
 				List<Song> songList = songService.fetchAllSongs();
 				model.addAttribute("songs", songList);
 				model.addAttribute("isPremium", userStatus);
+				model.addAttribute("userName", userName);
 
 				return "customerHome";
 			}
@@ -68,8 +70,6 @@ public class UsersController {
 
 	}
 
-
-
 	@GetMapping("/logout")
 	public String logout(HttpSession session) {
 
@@ -77,6 +77,29 @@ public class UsersController {
 		session.invalidate();
 
 		return "login";
+	}
+
+	///////////////////////////////////////////////////////////////////////
+
+	@GetMapping("/viewUsers")
+	public String viewUsers(Model model) {
+
+		List<Users> usersList = service.fetchAllUsers();
+		model.addAttribute("usersList", usersList);
+
+		return "displayUsers";
+
+	}
+	
+	@PostMapping("/searchUser")
+	public String searchUser(@RequestParam("username") String username, Model model) {
+		
+		Users user= service.findByName(username);
+		model.addAttribute("user", user);
+		return "searchUser";
+		
+		
+		
 	}
 
 }
