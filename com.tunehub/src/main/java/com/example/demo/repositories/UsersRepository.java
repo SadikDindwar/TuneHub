@@ -7,4 +7,6 @@ import com.example.demo.entities.Users;
 public interface UsersRepository extends JpaRepository<Users, Integer> {
 	public Users findByEmail(String email);
 
+	public Users findByUsername(String username);
+
 }
