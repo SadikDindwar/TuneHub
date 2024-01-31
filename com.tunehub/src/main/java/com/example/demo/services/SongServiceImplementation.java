@@ -10,7 +10,7 @@ import com.example.demo.repositories.SongRepository;
 
 @Service
 public class SongServiceImplementation implements SongService {
-	
+
 	@Autowired
 	SongRepository repo;
 
@@ -22,25 +22,29 @@ public class SongServiceImplementation implements SongService {
 
 	@Override
 	public List<Song> fetchAllSongs() {
-		
+
 		return repo.findAll();
 	}
 
 	@Override
 	public boolean nameExists(String name) {
-		
-		
-		if(repo.findByName(name)==null) {
+
+		if (repo.findByName(name) == null) {
 			return false;
 		}
-		
+
 		return true;
 	}
 
 	@Override
 	public void updateSong(Song song) {
 		repo.save(song);
-		
+
+	}
+
+	@Override
+	public Song findByName(String name) {
+		return repo.findByName(name);
 	}
 
 }
