@@ -43,31 +43,35 @@ public class UsersController {
 	@PostMapping("/validate")
 	public String validate(@RequestParam("email") String email, @RequestParam("password") String password,
 			HttpSession session, Model model) {
+		try {
 
-		if (service.validateUser(email, password) == true) {
-			String role = service.getRole(email);
+			if (service.validateUser(email, password) == true) {
+				String role = service.getRole(email);
 
-			session.setAttribute("email", email);
+				session.setAttribute("email", email);
 
-			if (role.equals("admin")) {
+				if (role.equals("admin")) {
 
-				return "adminHome";
+					return "adminHome";
+				} else {
+					Users user = service.getUser(email);
+
+					boolean userStatus = user.isPremium();
+					String userName = user.getUsername();
+					List<Song> songList = songService.fetchAllSongs();
+					model.addAttribute("songs", songList);
+					model.addAttribute("isPremium", userStatus);
+					model.addAttribute("userName", userName);
+
+					return "customerHome";
+				}
 			} else {
-				Users user = service.getUser(email);
-
-				boolean userStatus = user.isPremium();
-				String userName = user.getUsername();
-				List<Song> songList = songService.fetchAllSongs();
-				model.addAttribute("songs", songList);
-				model.addAttribute("isPremium", userStatus);
-				model.addAttribute("userName", userName);
-
-				return "customerHome";
+				return "login";
 			}
-		} else {
+
+		} catch (Exception e) {
 			return "login";
 		}
-
 	}
 
 	@GetMapping("/logout")
@@ -90,16 +94,14 @@ public class UsersController {
 		return "displayUsers";
 
 	}
-	
+
 	@PostMapping("/searchUser")
 	public String searchUser(@RequestParam("username") String username, Model model) {
-		
-		Users user= service.findByName(username);
+
+		Users user = service.findByName(username);
 		model.addAttribute("user", user);
 		return "searchUser";
-		
-		
-		
+
 	}
 
 }
