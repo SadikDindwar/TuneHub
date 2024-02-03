@@ -27,17 +27,31 @@ public class UsersController {
 	SongService songService;
 
 	@PostMapping("/register")
-	public String addUsers(@ModelAttribute Users user) {
+	public String addUsers(@ModelAttribute Users user, HttpSession session, Model model) {
+		if (user.getEmail() == "" || user.getUsername() == "" || user.getPassword() == "") {
+			return "registration";
+		}
 		boolean userStatus = service.emailExists(user.getEmail());
 		if (userStatus == false) {
 			service.addUser(user);
 			System.out.println("User added");
+			String role = service.getRole(user.getEmail());
+			session.setAttribute("email", user.getEmail());
+			if (role.equals("admin")) {
+				return "adminHome";
+			} else {
+				boolean premiumUserStatus = user.isPremium();
+				String userName = user.getUsername();
+				List<Song> songList = songService.fetchAllSongs();
+				model.addAttribute("songs", songList);
+				model.addAttribute("isPremium", premiumUserStatus);
+				model.addAttribute("userName", userName);
+				return "customerHome";
+			}
 
 		} else {
-			System.out.println("User already exists");
+			return "registration";
 		}
-
-		return "home";
 	}
 
 	@PostMapping("/validate")
