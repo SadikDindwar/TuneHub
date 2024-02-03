@@ -21,11 +21,16 @@ public class SongController {
 
 	@PostMapping("/addSong")
 	public String addSong(@ModelAttribute Song song) {
+		if (song.getName() == "" || song.getLink() == "") {
+			System.out.println("Fields cant be empty.");
+			return "newSong";
+		}
 		boolean songStatus = service.nameExists(song.getName());
 		if (songStatus == false) {
 			service.addSong(song);
 		} else {
 			System.out.println("Song name already exists.");
+			return "newSong";
 		}
 		return "adminHome";
 	}
@@ -52,12 +57,12 @@ public class SongController {
 		}
 
 	}
-	
+
 	@PostMapping("/searchSong")
-	public String searchSong(@RequestParam("name") String name , Model model) {
-		Song song= service.findByName(name);
+	public String searchSong(@RequestParam("name") String name, Model model) {
+		Song song = service.findByName(name);
 		// System.out.println(song);
-		model.addAttribute("song",song);
+		model.addAttribute("song", song);
 		return "searchSong";
 	}
 
