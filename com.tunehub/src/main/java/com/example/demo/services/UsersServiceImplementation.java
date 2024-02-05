@@ -16,7 +16,6 @@ public class UsersServiceImplementation implements UsersService {
 	@Override
 	public String addUser(Users user) {
 		repo.save(user);
-
 		return "User Added Successfully";
 	}
 
@@ -66,6 +65,19 @@ public class UsersServiceImplementation implements UsersService {
 	@Override
 	public Users findByName(String username) {
 		return repo.findByUsername(username);
+	}
+
+	@Override
+	public void deleteUser(String email) {
+		Users user = repo.findByEmail(email);
+		if(user.getRole().equals("customer")) {
+			System.out.println(user.getUsername() + " deleted.");
+			repo.delete(user);
+		}
+		else {
+			System.out.println("Admins cannot be deleted...");
+		}
+
 	}
 
 }

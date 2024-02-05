@@ -21,4 +21,6 @@ public interface UsersService {
 
 	public Users findByName(String username);
 
+	public void deleteUser(String email);
+
 }

@@ -21,5 +21,12 @@ public class NavController {
 		return "newSong";
 	}
 	
+	@GetMapping("/deleteUser")
+	public String deleteUser() {
+		return "deleteUser";
+	}
+	
+	
+	
 
 }

@@ -117,5 +117,26 @@ public class UsersController {
 		return "searchUser";
 
 	}
-
+	
+    @PostMapping("/dropUser")
+    public String dropUser(@RequestParam("email") String email, Model model) {
+    	if(email == "") {
+    		System.out.println("Field cant be empty.");
+    		return "deleteUser";
+    	}
+    	
+    	try {
+    	service.deleteUser(email);
+    	List<Users> usersList = service.fetchAllUsers();
+		model.addAttribute("usersList", usersList);
+    	
+    	return "displayUsers";
+    	}
+    	catch(Exception e ) {
+    		System.out.println("E-mail doesnot exist.");
+    		return "deleteUser";
+    	}
+	
+	
+    }
 }
